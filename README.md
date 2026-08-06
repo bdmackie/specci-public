@@ -79,7 +79,7 @@ curl -fsSL https://get.specci.ai | SPECCI_TOKEN=<token> sh
 | `SPECCI_TOKEN_FILE` | — | path to a file whose first line is the token |
 | `SPECCI_TOKEN` | — | the token itself |
 | `SPECCI_INSTALL_DIR` | `$HOME/.local/bin` | where binaries land |
-| `SPECCI_CHANNEL` | `stable` | release channel |
+| `SPECCI_CHANNEL` | — | release channel; unset means the one your licence is for |
 | `SPECCI_DL_BASE` | `https://dl.specci.ai` | download host |
 
 Resolution order is `SPECCI_TOKEN`, then `SPECCI_TOKEN_FILE`, then the prompt. With none of them and no terminal, the installer refuses rather than hanging.

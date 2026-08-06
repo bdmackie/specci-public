@@ -15,7 +15,11 @@
 set -eu
 
 DL_BASE="${SPECCI_DL_BASE:-https://dl.specci.ai}"
-CHANNEL="${SPECCI_CHANNEL:-stable}"
+# Unset by default, and deliberately not "stable": with no channel named, the
+# host serves whichever channel this token is entitled to. Someone invited to a
+# beta therefore gets the beta build from their first install, without being
+# told to set anything. Set SPECCI_CHANNEL to override.
+CHANNEL="${SPECCI_CHANNEL:-}"
 PRODUCT="cli"
 INSTALL_DIR="${SPECCI_INSTALL_DIR:-$HOME/.local/bin}"
 
@@ -126,7 +130,10 @@ main() {
 
 	say "Resolving specci for $target …"
 
-	manifest_url="$DL_BASE/latest.json?product=$PRODUCT&channel=$CHANNEL"
+	manifest_url="$DL_BASE/latest.json?product=$PRODUCT"
+	if [ -n "$CHANNEL" ]; then
+		manifest_url="$manifest_url&channel=$CHANNEL"
+	fi
 	manifest="$(curl -fsSL -H "Authorization: Bearer $token" "$manifest_url" 2>/dev/null)" || {
 		# A failed manifest fetch is nearly always the token, so say so rather
 		# than surfacing a bare HTTP code.
