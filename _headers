@@ -1,0 +1,9 @@
+# The installer is piped straight into sh, so it must never be cached at an
+# intermediary long enough to serve a stale bootstrap after a fix.
+/install.sh
+  Content-Type: text/x-shellscript; charset=utf-8
+  Cache-Control: public, max-age=300
+
+/
+  Content-Type: text/x-shellscript; charset=utf-8
+  Cache-Control: public, max-age=300

@@ -1,0 +1,4 @@
+# Serve the installer at the bare root so the command stays
+# `curl -fsSL https://get.specci.ai | sh`. A 200 is a rewrite, not a redirect,
+# so curl never has to follow a hop.
+/    /install.sh    200
