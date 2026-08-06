@@ -44,7 +44,17 @@ specci setup uninstall
 
 It tells you exactly what it will remove before doing it, and never touches a repository — your `.specci/` directories are left alone.
 
-Your stored licence is kept, so reinstalling needs no new token. To remove that too:
+It also keeps `~/.specci`, where specci stores machine-level settings — tool and Studio configuration, and your licence, so reinstalling needs no new token.
+
+To remove that as well:
+
+```sh
+specci setup uninstall --purge
+```
+
+Read what it lists before agreeing: `~/.specci/secrets.enc` also holds any LLM provider API keys you have configured. Specci did not issue those and cannot restore them.
+
+To drop only the licence, keeping everything else:
 
 ```sh
 specci setup activate --forget
