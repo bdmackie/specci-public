@@ -28,13 +28,23 @@ It also stores your licence, so upgrades need no further prompting.
 
 No toolchain, no clone, no compile. It uses no `sudo`, starts no background processes, and does not modify your shell configuration. It writes two things: the binary, and your licence under `~/.specci`.
 
+## Desktop app
+
+Specci Studio is optional, and installs through the CLI you already have:
+
+```sh
+specci setup install studio
+```
+
+It uses your existing licence, so there is no second token to enter. It lands in `/Applications`, or `~/Applications` if that is not writable — no `sudo` either way.
+
 ## Upgrade
 
 ```sh
 specci setup upgrade
 ```
 
-Checks the release channel, verifies the download against its published checksum, and replaces the binary in place. `specci setup upgrade --check` reports what is available without changing anything.
+Checks the release channel, verifies each download against its published checksum, and replaces what is installed in place. If you have Studio, it is upgraded too — the two share a version, so there is no second command to remember. `specci setup upgrade --check` reports what is available without changing anything.
 
 ## Uninstall
 
@@ -42,7 +52,7 @@ Checks the release channel, verifies the download against its published checksum
 specci setup uninstall
 ```
 
-It tells you exactly what it will remove before doing it, and never touches a repository — your `.specci/` directories are left alone.
+It tells you exactly what it will remove before doing it — the binary, and Studio if you installed it — and never touches a repository. Your `.specci/` directories are left alone.
 
 Settings in `~/.specci` are kept, including your licence, so reinstalling needs no new token. To remove those too:
 
