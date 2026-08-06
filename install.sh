@@ -176,6 +176,25 @@ main() {
 	say ""
 	say "Installed specci $version to $INSTALL_DIR ($(printf '%s' "$installed" | sed 's/^ //'))"
 
+	# Hand the token to the installed binary so `specci setup upgrade` works
+	# without asking for it again. Passed in the environment rather than as an
+	# argument, so it does not appear in `ps` output.
+	#
+	# --no-verify because the token has already been used twice, successfully, to
+	# fetch the manifest and the artefact; a third round trip would prove nothing.
+	#
+	# A failure here must not fail the install. The binary is on disk and works;
+	# only the convenience of a stored licence is lost, and that is recoverable
+	# with one command. Turning a successful install into a failure over it would
+	# be a poor trade.
+	if SPECCI_TOKEN="$token" "$INSTALL_DIR/specci" setup activate --no-verify >/dev/null 2>&1; then
+		say "Licence stored — 'specci setup upgrade' will keep this install current."
+	else
+		say ""
+		say "Note: the licence could not be stored automatically. To enable upgrades:"
+		say "    specci setup activate"
+	fi
+
 	case ":$PATH:" in
 		*":$INSTALL_DIR:"*) say "Run 'specci --help' to get started." ;;
 		*)

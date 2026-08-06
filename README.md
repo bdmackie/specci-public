@@ -24,17 +24,31 @@ curl -fsSL https://get.specci.ai | less
 4. **Verifies the SHA-256 and refuses to install on mismatch.**
 5. Installs into `~/.local/bin`, then tells you if that directory is not on your `PATH`.
 
-No toolchain, no clone, no compile. It uses no `sudo`, writes nothing outside the install directory, starts no background processes, and does not modify your shell configuration.
+It also stores your licence, so upgrades need no further prompting.
+
+No toolchain, no clone, no compile. It uses no `sudo`, starts no background processes, and does not modify your shell configuration. It writes two things: the binary, and your licence under `~/.specci`.
+
+## Upgrade
+
+```sh
+specci setup upgrade
+```
+
+Checks the release channel, verifies the download against its published checksum, and replaces the binary in place. `specci setup upgrade --check` reports what is available without changing anything.
 
 ## Uninstall
 
-Delete the binary:
-
 ```sh
-rm ~/.local/bin/specci
+specci setup uninstall
 ```
 
-That is all of it. The installer leaves nothing else behind.
+It tells you exactly what it will remove before doing it, and never touches a repository — your `.specci/` directories are left alone.
+
+Your stored licence is kept, so reinstalling needs no new token. To remove that too:
+
+```sh
+specci setup activate --forget
+```
 
 ## Supported platforms
 
